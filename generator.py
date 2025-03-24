@@ -10,8 +10,6 @@ def gensysprompt(data,level=0):
             elif line.startswith("#"):
                 pass
             else:
-                if " " in line:
-                    yield ("="*level)+"= "+" ".join(line.split(" ")[1:])+" ="+("="*level)+"\n"
                 for i in gensysprompt(os.path.join(data,line.split(" ")[0]),level+1):
                     yield i
     else:
@@ -20,10 +18,10 @@ def gensysprompt(data,level=0):
             d+="\n"
         yield d
 
-def getprompt(name,vars):
+def getprompt(name):
     out="".join(list(gensysprompt(name)))
     return out
 
-systemprompt=getprompt(os.path.join(os.path.dirname(__file__),"systemprompt"))
+systemprompt=getprompt(os.path.join(os.path.dirname(__file__),"static"))
 if __name__=="__main__":
     print(systemprompt)
